@@ -107,7 +107,7 @@ public class RegexRepetitionFactorTest {
      *   2. ending with bar
      *   3. with or without SPACE between
      *
-     * example: fooxbar, fooybar, fooxyzbar
+     * example: foobar, foo bar
      *
      * REGEX TO DO THIS
      * ^ -> Matches the beginning of a line.
@@ -137,7 +137,7 @@ public class RegexRepetitionFactorTest {
      *   2. ending with bar
      *   3. with AT LEAST on SPACE between
      *
-     * example: fooxbar, fooybar, fooxyzbar
+     * example: foo[" "]bar
      *
      * REGEX TO DO THIS
      * ^ -> Matches the beginning of a line.
@@ -158,6 +158,36 @@ public class RegexRepetitionFactorTest {
             }
         }
         assertThat(matches).hasSameElementsAs(List.of("foo bar", "foo  bar"));
+    }
+
+    /**
+     * * Exercise:
+     * - We have to find words:
+     *   1. starting with foo,
+     *   2. ending with bar
+     *   3. repeating 2 times some letter between
+     *
+     * example: foo[2x]bar
+     *
+     * REGEX TO DO THIS
+     * ^ -> Matches the beginning of a line.
+     * $ ->	Matches the end of the line.
+     * {n} -> Matches n repetitions of the previous character or expression.
+     * . -> Matches any single character.
+     */
+    @Test
+    void testingNRepetitions() {
+        final String REGEX_PATTERN = "^foo(.{2})bar$";
+        Pattern pattern = Pattern.compile(REGEX_PATTERN);
+        final String[] valuesToMatch = {"fooaxbar", "fooxbar", "baryfoo", "foobar", "foo bar", "foo  bar", "fooxybar", "foocbar", "afoocbar", "afoocbaraa"};
+        List<String> matches = new ArrayList<>();
+
+        for (String value : valuesToMatch) {
+            if(pattern.matcher(value).find()){
+                matches.add(value);
+            }
+        }
+        assertThat(matches).hasSameElementsAs(List.of("fooxybar", "fooaxbar", "foo  bar"));
     }
 
 }

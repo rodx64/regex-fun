@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class RegexDelimitedTest {
+public class RegexMatchingTest {
 
     /**
      * * Exercise:

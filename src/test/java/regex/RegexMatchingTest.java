@@ -10,46 +10,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class RegexMatchingTest {
 
-    /**
-     * * Exercise:
-     * - We have to find words:
-     * 1. starting with any letter,
-     * 2. ending with oobar
-     * <p>
-     * example: coobar,
-     * coo bar,
-     * zoobar
-     * <p>
-     * REGEX TO DO THIS
-     * ^ -> Matches the beginning of a line.
-     * $ ->	Matches the end of the line.
-     * . -> Matches any single character.
-     * + -> Matches 1 or more repetitions of the previous character or expression.
-     */
-    @Test
-    void testingWithSpecificWordAfter() {
-        final String REGEX_PATTERN = "^(.+)oobar$";
-        Pattern pattern = Pattern.compile(REGEX_PATTERN);
-        final String[] valuesToMatch = {
-                "foobar",
-                "fooabar",
-                "coobar",
-                "Zoobar",
-                "zoobaro",
-                "s oobar",
-                "soobar"
-        };
-        List<String> matches = new ArrayList<>();
-
-        for (String value : valuesToMatch) {
-            if (pattern.matcher(value).find()) {
-                matches.add(value);
-            }
-        }
-        assertThat(matches).hasSameElementsAs(
-                List.of("foobar", "coobar", "Zoobar", "s oobar", "soobar")
-        );
-    }
 
     /**
      * * Exercise:
@@ -65,7 +25,6 @@ public class RegexMatchingTest {
      * ^ -> Matches the beginning of a line.
      * $ ->	Matches the end of the line.
      * . -> Matches any single character.
-     * + -> Matches 1 or more repetitions of the previous character or expression.
      */
     @Test
     void testingWithSpecificWordAfterAndStartingWithSpecificLetters() {

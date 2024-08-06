@@ -190,4 +190,92 @@ public class RegexRepetitionFactorTest {
         assertThat(matches).hasSameElementsAs(List.of("fooxybar", "fooaxbar", "foo  bar"));
     }
 
+    /**
+     * * Exercise:
+     * - We have to find words:
+     * 1. starting with any letter,
+     * 2. ending with oobar
+     * <p>
+     * example: coobar,
+     * coo bar,
+     * zoobar
+     * <p>
+     * REGEX TO DO THIS
+     * ^ -> Matches the beginning of a line.
+     * $ ->	Matches the end of the line.
+     * . -> Matches any single character.
+     * + -> Matches 1 or more repetitions of the previous character or expression.
+     */
+    @Test
+    void testingWithSpecificWordAfter() {
+        final String REGEX_PATTERN = "^(.+)oobar$";
+        Pattern pattern = Pattern.compile(REGEX_PATTERN);
+        final String[] valuesToMatch = {
+                "foobar",
+                "fooabar",
+                "coobar",
+                "Zoobar",
+                "zoobaro",
+                "s oobar",
+                "soobar"
+        };
+        List<String> matches = new ArrayList<>();
+
+        for (String value : valuesToMatch) {
+            if (pattern.matcher(value).find()) {
+                matches.add(value);
+            }
+        }
+        assertThat(matches).hasSameElementsAs(
+                List.of("foobar", "coobar", "Zoobar", "s oobar", "soobar")
+        );
+    }
+
+    /**
+     * * Exercise:
+     * - We have to find words with char repetitions between two words:
+     * <p>
+     * example: fooabar, fooaaabar, fooaabar
+     * <p>
+     * REGEX TO DO THIS
+     * (...) -> Groups a set of matching characters together.
+     * + -> Matches 1 or more repetitions of the previous character or expression.
+     * $ ->	Matches the end of the line.
+     * ^ -> Matches the beginning of a line.
+     */
+    @Test
+    void testingSpecificStringsByCharRepetitionsInside() {
+        final String REGEX_PATTERN = "^(foo)(a)+(bar)$";
+        Pattern pattern = Pattern.compile(REGEX_PATTERN);
+        final String[] valuesToMatch = {
+                "aoobar",
+                "Aoobar",
+                "fooabar",
+                "fooaabar",
+                "fooaaabar",
+                "boobar",
+                "Boobar",
+                "booabar",
+                "hoobar",
+                "Zoobar",
+                "foobar",
+                "foobara",
+                "fooobar",
+                "zoobaro",
+                "s oobar",
+                "coobar",
+                "Coobar"
+        };
+        List<String> matches = new ArrayList<>();
+
+        for (String value : valuesToMatch) {
+            if (pattern.matcher(value).find()) {
+                matches.add(value);
+            }
+        }
+
+        assertThat(matches).hasSameElementsAs(
+                List.of("fooabar", "fooaabar", "fooaaabar")
+        );
+    }
 }
